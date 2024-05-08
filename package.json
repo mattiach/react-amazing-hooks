@@ -1,0 +1,25 @@
+{
+  "name": "react-amazing-hooks",
+  "version": "1.0.0",
+  "description": "A collection of react hooks",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattiach/react-amazing-hooks.git"
+  },
+  "keywords": [
+    "react-amazing-hooks"
+  ],
+  "author": "mattiach",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mattiach/react-amazing-hooks/issues"
+  },
+  "homepage": "https://github.com/mattiach/react-amazing-hooks#readme",
+  "dependencies": {
+    "react": "^18.3.1"
+  }
+}
