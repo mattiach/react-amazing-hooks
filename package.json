@@ -16,9 +16,9 @@
   "author": "mattiach",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mattiach/react-amazing-hooks/issues"
+    "url": "https://github.com/mattiach/react-amazing-hooks"
   },
-  "homepage": "https://github.com/mattiach/react-amazing-hooks#readme",
+  "homepage": "https://github.com/mattiach/react-amazing-hooks",
   "dependencies": {
     "react": "^18.3.1"
   }

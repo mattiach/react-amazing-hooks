@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+// custom hook to manage an array of items with various functions
 const useArray = (initial) => {
   const [value, setValue] = useState(initial);
 
@@ -80,7 +81,7 @@ const useArray = (initial) => {
 
   return {
     add,
-    clear,
+    clear,  
     removeById,
     removeIndex,
     replaceAtIndex,
