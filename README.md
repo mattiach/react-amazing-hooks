@@ -18,21 +18,21 @@ yarn add react-amazing-hooks
 
 ## Docs
 
-| Hook name                | Description                                                                                                                                                              |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `useArray()`             | Manage an array of items with various functions: _Add, removeById, removeById, removeIndex, replaceAtIndex, replaceById, shuffle, ascendingSort, descendingSort, clear_. |
-| `useUUID()`              | Used to generate a unique identifier with _high customizability and better performance_.                                                                                 |
-| `useFieldsPopulated()`   | Used to check if object fields are populated or empty.                                                                                                                   |
-| `useSortObjByProperty()` | Sort an array of objects by a property with optional _ascending_ or _descending_ order.                                                                                  |
-| `useStorage()`           | Used to manage state in _localStorage_ (with optional _expiration_) or _sessionStorage_.                                                                                 |
-| `useBrowserLanguage()`   | This will help you to get the _browser language_ with optional formatting.                                                                                               |
-| `useCopyToClipboard()`   | Custom hook for copying _text to clipboard_ with optional reset time and optional _callback_.                                                                            |
-| `useToggle()`            | this hook is used to _toggle a boolean_ value with optional _localStorage_ support.                                                                                      |
-| `useOnlineStatus()`      | Detect online status with boolean value (true/false).                                                                                                                    |
-| `useWindowScroll()`     | Tracks _window scroll position_ with usefull information like percentage and position.                                                                                   |
+| Hook name                | Description                                                                                                                                                                                   |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `useArray()`             | Manage an array of items with various functions: _Add, removeById, removeById, removeIndex, replaceAtIndex, replaceById, shuffle, ascendingSort, descendingSort, clear_.                      |
+| `useUUID()`              | Used to generate a unique identifier with _high customizability and better performance_.                                                                                                      |
+| `useFieldsPopulated()`   | Used to check if object fields are populated or empty.                                                                                                                                        |
+| `useSortObjByProperty()` | Sort an array of objects by a property with optional _ascending_ or _descending_ order.                                                                                                       |
+| `useMediaQuery()`        | Used to check if the screen size is within a certain range. this hook can be used to conditionally render components based on screen size, or to apply different styles based on screen size. |
+| `useStorage()`           | Used to manage state in _localStorage_ (with optional _expiration_) or _sessionStorage_.                                                                                                      |
+| `useBrowserLanguage()`   | This will help you to get the _browser language_ with optional formatting.                                                                                                                    |
+| `useCopyToClipboard()`   | Custom hook for copying _text to clipboard_ with optional reset time and optional _callback_.                                                                                                 |
+| `useToggle()`            | this hook is used to _toggle a boolean_ value with optional _localStorage_ support.                                                                                                           |
+| `useOnlineStatus()`      | Detect online status with boolean value (true/false).                                                                                                                                         |
+| `useWindowScroll()`      | Tracks _window scroll position_ with usefull information like percentage and position.                                                                                                        |
 
-
-____________
+---
 
 ### useArray
 
@@ -225,6 +225,41 @@ const MyComponent = () => {
         ))}
       </ul>
     </>
+  );
+};
+
+export default MyComponent;
+```
+
+### useMediaQuery
+
+```jsx
+import { useMediaQuery } from "react-amazing-hooks";
+
+const MyComponent = () => {
+  // just a single value
+  const isMobile = useMediaQuery({ query: 550 });
+  
+  // range between 551 and 767 - 'query' will be ignored
+  const isSmallTablet = useMediaQuery({ query: 551, min: 551, max: 767 });
+
+  // range between 768 and 991
+  const isTablet = useMediaQuery({ min: 768, max: 991 });
+  const isLaptop = useMediaQuery({ min: 992, max: 1119 });
+  const isDesktop = useMediaQuery({ min: 1120, max: 1399 });
+
+  // range from 1400 and up. Works the same as just 'max'
+  const isLargeDesktop = useMediaQuery({ min: 1400 });
+
+  return (
+    <div>
+      {isMobile && <p>Mobile</p>}
+      {isSmallTablet && <p>Small Tablet</p>}
+      {isTablet && <p>Tablet</p>}
+      {isLaptop && <p>Laptop</p>}
+      {isDesktop && <p>Desktop</p>}
+      {isLargeDesktop && <p>Large Desktop</p>}
+    </div>
   );
 };
 
