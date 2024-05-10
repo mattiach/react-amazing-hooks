@@ -31,6 +31,7 @@ yarn add react-amazing-hooks
 | `useToggle()`            | this hook is used to _toggle a boolean_ value with optional _localStorage_ support.                                                                                                           |
 | `useOnlineStatus()`      | Detect online status with boolean value (true/false).                                                                                                                                         |
 | `useWindowScroll()`      | Tracks _window scroll position_ with usefull information like percentage and position.                                                                                                        |
+| `usePagination()`        | This hook is used to _paginate data_. It takes an array of data and the number of items per page as arguments. It also returns some functions to *navigate through the pages*.                  |
 
 ---
 
@@ -239,7 +240,7 @@ import { useMediaQuery } from "react-amazing-hooks";
 const MyComponent = () => {
   // just a single value
   const isMobile = useMediaQuery({ query: 550 });
-  
+
   // range between 551 and 767 - 'query' will be ignored
   const isSmallTablet = useMediaQuery({ query: 551, min: 551, max: 767 });
 
@@ -448,6 +449,60 @@ const MyComponent = () => {
   );
 };
 
+export default MyComponent;
+```
+
+### usePagination
+
+```jsx
+import { usePagination } from "react-amazing-hooks";
+
+const MyComponent = () => {
+  const myData = [
+    { id: 1, name: "Oggetto 1" },
+    { id: 2, name: "Item 2" },
+    { id: 3, name: "Item 3" },
+    { id: 4, name: "Item 4" },
+    { id: 5, name: "Item 5" },
+    { id: 6, name: "Item 6" },
+    { id: 7, name: "Item 7" },
+    { id: 8, name: "Item 8" },
+    { id: 9, name: "Item 9" },
+    { id: 10, name: "Item 10" },
+    // ...
+  ]
+
+  const objData = 
+
+  const {
+    paginatedData, // data for the current page
+    currentPage, // this rappresent the current page number (number)
+    totalPages, // how many pages in total (number)
+    goToPage, // go to a specific page with a number argument (function)
+    nextPage, // go to the next page (function)
+    prevPage, // go to go to the previous page (function)
+    goToFirstPage, // go to the first page (function)
+    goToLastPage, // go to the last page (function)
+  } = usePagination(myData, 5); // .. example: 5 items per page
+
+  return (
+    <div>
+      {/* render your paginated data here */}
+      {paginatedData.map((item, index) => (
+        <div key={index}>{item}</div>
+      ))}
+      {/* pagination controls. This is just an example, you can style it as you like or use other controls */}
+      <button onClick={goToFirstPage} disabled={currentPage === 1}>First</button>
+      <button onClick={prevPage} disabled={currentPage === 1}>Previous</button>
+      <span style={{ margin: '0 10px' }}>{currentPage} of {totalPages}</span>
+      <button onClick={nextPage} disabled={currentPage === totalPages}>Next</button>
+      <button onClick={goToLastPage} disabled={currentPage === totalPages}>Last</button>
+
+      {/* since the goToPage function requires a number as an argument, you can use an arrow function */}
+      <button onClick={() => goToPage(3)} disabled={currentPage === totalPages}>Go to page 3</button>
+    </div>
+  );
+}
 export default MyComponent;
 ```
 
