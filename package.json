@@ -11,7 +11,15 @@
     "url": "git+https://github.com/mattiach/react-amazing-hooks.git"
   },
   "keywords": [
-    "react-amazing-hooks"
+    "react-amazing-hooks",
+    "react-hooks",
+    "react",
+    "localStorage react",
+    "react-uuid",
+    "react uuid",
+    "react copy to clipboard",
+    "useUUID",
+    "useBrowserLanguage"
   ],
   "author": "mattiach",
   "license": "MIT",
