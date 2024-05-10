@@ -32,6 +32,7 @@ yarn add react-amazing-hooks
 | `useOnlineStatus()`      | Detect online status with boolean value (true/false).                                                                                                                                         |
 | `useWindowScroll()`      | Tracks _window scroll position_ with usefull information like percentage and position.                                                                                                        |
 | `usePagination()`        | This hook is used to _paginate data_. It takes an array of data and the number of items per page as arguments. It also returns some functions to *navigate through the pages*.                  |
+| `usePreviousValues()`        | Store previous values with a limit. Default is 1 and optional "remove duplicates function" if unique is true.                |
 
 ---
 
@@ -503,6 +504,43 @@ const MyComponent = () => {
     </div>
   );
 }
+export default MyComponent;
+```
+
+### usePreviousValues
+
+```jsx
+import { usePreviousValues } from "react-amazing-hooks";
+
+const MyComponent = () => {
+  const [value, setValue] = useState('React.js');
+  const { previousValue } = usePreviousValues(
+    value, // the value to store as previous value
+    3,     // how many previous values to store
+    true   // remove duplicates. Default is false
+  );
+
+  return (
+    <>
+      <div>
+        <p>My favourite JS framework is: <b>{value}</b></p>
+        <ul>
+          {previousValue.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <button onClick={() => setValue('React.js')}>React.js</button>
+        <button onClick={() => setValue('Svelte')}>Svelte</button>
+        <button onClick={() => setValue('Next.js')}>Next.js</button>
+        <button onClick={() => setValue('Angular')}>Angular</button>
+        <button onClick={() => setValue('Vue.js')}>Vue.js</button>
+      </div>
+    </>
+  );
+}
+
 export default MyComponent;
 ```
 
