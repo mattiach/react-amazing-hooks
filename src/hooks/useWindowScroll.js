@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 // custom hook to track window scroll position
-const useWindowsScroll = () => {
+const useWindowScroll = () => {
   const [scrollPosition, setScrollPosition] = useState({
     x: 0,
     y: 0,
@@ -38,4 +38,4 @@ const useWindowsScroll = () => {
   return scrollPosition;
 };
 
-export default useWindowsScroll;
+export default useWindowScroll;

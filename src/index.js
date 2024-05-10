@@ -7,4 +7,4 @@ export { default as useFieldsPopulated } from './hooks/useFieldsPopulated';
 export { default as useStorage } from './hooks/useStorage';
 export { default as useToggle } from './hooks/useToggle';
 export { default as useUUID } from './hooks/useUUID';
-export { default as useWindowsScroll } from './hooks/useWindowsScroll';
+export { default as useWindowScroll } from './hooks/useWindowScroll';

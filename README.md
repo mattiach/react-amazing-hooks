@@ -18,21 +18,23 @@ yarn add react-amazing-hooks
 
 ## Docs
 
-| Hook name                | Description                                                                                                                                                              |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `useArray()`             | Manage an array of items with various functions: _Add, removeById, removeById, removeIndex, replaceAtIndex, replaceById, shuffle, ascendingSort, descendingSort, clear_. |
-| `useUUID()`              | Used to generate a unique identifier with _high customizability and better performance_.                                                                                 |
-| `useFieldsPopulated()`   | Used to check if object fields are populated or empty.                                                                                                                   |
-| `useSortObjByProperty()` | Sort an array of objects by a property with optional _ascending_ or _descending_ order.                                                                                  |
-| `useStorage()`           | Used to manage state in _localStorage_ (with optional _expiration_) or _sessionStorage_.                                                                                 |
-| `useBrowserLanguage()`   | This will help you to get the _browser language_ with optional formatting.                                                                                               |
-| `useCopyToClipboard()`   | Custom hook for copying _text to clipboard_ with optional reset time and optional _callback_.                                                                            |
-| `useToggle()`            | this hook is used to _toggle a boolean_ value with optional _localStorage_ support.                                                                                      |
-| `useOnlineStatus()`      | Detect online status with boolean value (true/false).                                                                                                                    |
-| `useWindowsScroll()`     | Tracks _window scroll position_ with usefull information like percentage and position.                                                                                   |
+| Hook name                | Description                                                                                                                                                                                   |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `useArray()`             | Manage an array of items with various functions: _Add, removeById, removeById, removeIndex, replaceAtIndex, replaceById, shuffle, ascendingSort, descendingSort, clear_.                      |
+| `useUUID()`              | Used to generate a unique identifier with _high customizability and better performance_.                                                                                                      |
+| `useFieldsPopulated()`   | Used to check if object fields are populated or empty.                                                                                                                                        |
+| `useSortObjByProperty()` | Sort an array of objects by a property with optional _ascending_ or _descending_ order.                                                                                                       |
+| `useMediaQuery()`        | Used to check if the screen size is within a certain range. this hook can be used to conditionally render components based on screen size, or to apply different styles based on screen size. |
+| `useStorage()`           | Used to manage state in _localStorage_ (with optional _expiration_) or _sessionStorage_.                                                                                                      |
+| `useBrowserLanguage()`   | This will help you to get the _browser language_ with optional formatting.                                                                                                                    |
+| `useCopyToClipboard()`   | Custom hook for copying _text to clipboard_ with optional reset time and optional _callback_.                                                                                                 |
+| `useToggle()`            | this hook is used to _toggle a boolean_ value with optional _localStorage_ support.                                                                                                           |
+| `useOnlineStatus()`      | Detect online status with boolean value (true/false).                                                                                                                                         |
+| `useWindowScroll()`      | Tracks _window scroll position_ with usefull information like percentage and position.                                                                                                        |
+| `usePagination()`        | This hook is used to _paginate data_. It takes an array of data and the number of items per page as arguments. It also returns some functions to *navigate through the pages*.                  |
+| `usePreviousValues()`        | Store previous values with a limit. Default is 1 and optional "remove duplicates function" if unique is true.                |
 
-
-____________
+---
 
 ### useArray
 
@@ -231,6 +233,41 @@ const MyComponent = () => {
 export default MyComponent;
 ```
 
+### useMediaQuery
+
+```jsx
+import { useMediaQuery } from "react-amazing-hooks";
+
+const MyComponent = () => {
+  // just a single value
+  const isMobile = useMediaQuery({ query: 550 });
+
+  // range between 551 and 767 - 'query' will be ignored
+  const isSmallTablet = useMediaQuery({ query: 551, min: 551, max: 767 });
+
+  // range between 768 and 991
+  const isTablet = useMediaQuery({ min: 768, max: 991 });
+  const isLaptop = useMediaQuery({ min: 992, max: 1119 });
+  const isDesktop = useMediaQuery({ min: 1120, max: 1399 });
+
+  // range from 1400 and up. Works the same as just 'max'
+  const isLargeDesktop = useMediaQuery({ min: 1400 });
+
+  return (
+    <div>
+      {isMobile && <p>Mobile</p>}
+      {isSmallTablet && <p>Small Tablet</p>}
+      {isTablet && <p>Tablet</p>}
+      {isLaptop && <p>Laptop</p>}
+      {isDesktop && <p>Desktop</p>}
+      {isLargeDesktop && <p>Large Desktop</p>}
+    </div>
+  );
+};
+
+export default MyComponent;
+```
+
 ### useStorage
 
 ```jsx
@@ -392,14 +429,14 @@ const MyComponent = () => {
 export default MyComponent;
 ```
 
-### useWindowsScroll
+### useWindowScroll
 
 ```jsx
-import { useWindowsScroll } from "react-amazing-hooks";
+import { useWindowScroll } from "react-amazing-hooks";
 
 const MyComponent = () => {
   // .. import just what you need!
-  const { x, y, percentageX, percentageY } = useWindowsScroll();
+  const { x, y, percentageX, percentageY } = useWindowScroll();
 
   return (
     <>
@@ -412,6 +449,97 @@ const MyComponent = () => {
     </>
   );
 };
+
+export default MyComponent;
+```
+
+### usePagination
+
+```jsx
+import { usePagination } from "react-amazing-hooks";
+
+const MyComponent = () => {
+  const myData = [
+    { id: 1, name: "Oggetto 1" },
+    { id: 2, name: "Item 2" },
+    { id: 3, name: "Item 3" },
+    { id: 4, name: "Item 4" },
+    { id: 5, name: "Item 5" },
+    { id: 6, name: "Item 6" },
+    { id: 7, name: "Item 7" },
+    { id: 8, name: "Item 8" },
+    { id: 9, name: "Item 9" },
+    { id: 10, name: "Item 10" },
+    // ...
+  ]
+
+  const objData = 
+
+  const {
+    paginatedData, // data for the current page
+    currentPage, // this rappresent the current page number (number)
+    totalPages, // how many pages in total (number)
+    goToPage, // go to a specific page with a number argument (function)
+    nextPage, // go to the next page (function)
+    prevPage, // go to go to the previous page (function)
+    goToFirstPage, // go to the first page (function)
+    goToLastPage, // go to the last page (function)
+  } = usePagination(myData, 5); // .. example: 5 items per page
+
+  return (
+    <div>
+      {/* render your paginated data here */}
+      {paginatedData.map((item, index) => (
+        <div key={index}>{item}</div>
+      ))}
+      {/* pagination controls. This is just an example, you can style it as you like or use other controls */}
+      <button onClick={goToFirstPage} disabled={currentPage === 1}>First</button>
+      <button onClick={prevPage} disabled={currentPage === 1}>Previous</button>
+      <span style={{ margin: '0 10px' }}>{currentPage} of {totalPages}</span>
+      <button onClick={nextPage} disabled={currentPage === totalPages}>Next</button>
+      <button onClick={goToLastPage} disabled={currentPage === totalPages}>Last</button>
+
+      {/* since the goToPage function requires a number as an argument, you can use an arrow function */}
+      <button onClick={() => goToPage(3)} disabled={currentPage === totalPages}>Go to page 3</button>
+    </div>
+  );
+}
+export default MyComponent;
+```
+
+### usePreviousValues
+
+```jsx
+import { usePreviousValues } from "react-amazing-hooks";
+
+const MyComponent = () => {
+  const [value, setValue] = useState('React.js');
+  const { previousValue } = usePreviousValues(
+    value, // the value to store as previous value
+    3,     // how many previous values to store
+    true   // remove duplicates. Default is false
+  );
+
+  return (
+    <>
+      <div>
+        <p>My favourite JS framework is: <b>{value}</b></p>
+        <ul>
+          {previousValue.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <button onClick={() => setValue('React.js')}>React.js</button>
+        <button onClick={() => setValue('Svelte')}>Svelte</button>
+        <button onClick={() => setValue('Next.js')}>Next.js</button>
+        <button onClick={() => setValue('Angular')}>Angular</button>
+        <button onClick={() => setValue('Vue.js')}>Vue.js</button>
+      </div>
+    </>
+  );
+}
 
 export default MyComponent;
 ```
