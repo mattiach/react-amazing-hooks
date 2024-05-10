@@ -29,7 +29,7 @@ yarn add react-amazing-hooks
 | `useCopyToClipboard()`   | Custom hook for copying _text to clipboard_ with optional reset time and optional _callback_.                                                                            |
 | `useToggle()`            | this hook is used to _toggle a boolean_ value with optional _localStorage_ support.                                                                                      |
 | `useOnlineStatus()`      | Detect online status with boolean value (true/false).                                                                                                                    |
-| `useWindowsScroll()`     | Tracks _window scroll position_ with usefull information like percentage and position.                                                                                   |
+| `useWindowScroll()`     | Tracks _window scroll position_ with usefull information like percentage and position.                                                                                   |
 
 
 ____________
@@ -392,14 +392,14 @@ const MyComponent = () => {
 export default MyComponent;
 ```
 
-### useWindowsScroll
+### useWindowScroll
 
 ```jsx
-import { useWindowsScroll } from "react-amazing-hooks";
+import { useWindowScroll } from "react-amazing-hooks";
 
 const MyComponent = () => {
   // .. import just what you need!
-  const { x, y, percentageX, percentageY } = useWindowsScroll();
+  const { x, y, percentageX, percentageY } = useWindowScroll();
 
   return (
     <>
