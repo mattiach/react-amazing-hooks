@@ -8,3 +8,4 @@ export { default as useStorage } from './hooks/useStorage';
 export { default as useToggle } from './hooks/useToggle';
 export { default as useUUID } from './hooks/useUUID';
 export { default as useWindowScroll } from './hooks/useWindowScroll';
+export { default as useMediaQuery } from './hooks/useMediaQuery';
