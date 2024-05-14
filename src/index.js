@@ -9,3 +9,5 @@ export { default as useToggle } from './hooks/useToggle';
 export { default as useUUID } from './hooks/useUUID';
 export { default as useWindowScroll } from './hooks/useWindowScroll';
 export { default as useMediaQuery } from './hooks/useMediaQuery';
+export { default as usePagination } from './hooks/usePagination';
+export { default as usePreviousValues } from './hooks/usePreviousValues';
