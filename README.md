@@ -475,10 +475,7 @@ const MyComponent = () => {
     { id: 8, name: "Item 8" },
     { id: 9, name: "Item 9" },
     { id: 10, name: "Item 10" },
-    // ...
   ]
-
-  const objData =
 
   const {
     paginatedData, // data for the current page
