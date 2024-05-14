@@ -27,7 +27,7 @@ yarn add react-amazing-hooks
 | `useMediaQuery()`        | Used to check if the screen size is within a certain range. this hook can be used to conditionally render components based on screen size, or to apply different styles based on screen size. |
 | `useStorage()`           | Used to manage state in _localStorage_ (with optional _expiration_) or _sessionStorage_.                                                                                                      |
 | `useBrowserLanguage()`   | This will help you to get the _browser language_ with optional formatting.                                                                                                                    |
-| `useCopyToClipboard()`   | Custom hook for copying _text to clipboard_ with optional reset time and optional _callback_.                                                                                                 |
+| `useCopyToClipboard()`   | Custom hook for copying _text to clipboard_  optional _callback_.                                                                                                 |
 | `useToggle()`            | this hook is used to _toggle a boolean_ value with optional _localStorage_ support.                                                                                                           |
 | `useOnlineStatus()`      | Detect online status with boolean value (true/false).                                                                                                                                         |
 | `useWindowScroll()`      | Tracks _window scroll position_ with usefull information like percentage and position.                                                                                                        |
@@ -344,31 +344,30 @@ export default MyComponent;
 import { useCopyToClipboard } from "react-amazing-hooks";
 
 const MyComponent = () => {
-  const handleCopyCallback = () => {
-    console.log("hello world!");
+  const [inputValue, setInputValue] = useState('');
+
+  // my custom callback function
+  const myAmazingCallBack = () => {
+    console.log('this is just an example callback function');
+  }
+
+  // function to handle input change
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
   };
 
-  const { copyToClipboard, isCopied, isCopyActionBlocked } = useCopyToClipboard(
-    5000, // (optional) reset time in milliseconds, defaults to 0
-    handleCopyCallback // (optional) callback function
-  );
-
-  const handleClick = () => {
-    const textToCopy = "Text to copy"; // example 1
-    copyToClipboard(textToCopy);
-  };
-
-  const handleClick2 = () => {
-    copyToClipboard("Text to copy 2"); // example 2
-  };
+  // use the custom hook with or without a callback function
+  const copyToClipboard = useCopyToClipboard(myAmazingCallBack);
+  const copyToClipboardWithNoCallback = useCopyToClipboard();
 
   return (
-    <div>
-      <button onClick={handleClick}>Click 1</button>
-      <button onClick={handleClick2}>Click 2</button>
-      <p>{isCopied && <span>Text copied, well done buddy!</span>}</p>
-      <p>{isCopyActionBlocked && <span>Wait a second dude..</span>}</p>
-    </div>
+    <>
+      <input type="text" value={inputValue} onChange={handleInputChange} />
+      <div>
+        <button onClick={() => copyToClipboard(inputValue)}>Copy to Clipboard</button>
+        <button onClick={() => copyToClipboardWithNoCallback(inputValue)}>Copy to Clipboard 2</button>
+      </div>
+    </>
   );
 };
 
