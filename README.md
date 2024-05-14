@@ -27,7 +27,7 @@ yarn add react-amazing-hooks
 | `useMediaQuery()`        | Used to check if the screen size is within a certain range. this hook can be used to conditionally render components based on screen size, or to apply different styles based on screen size. |
 | `useStorage()`           | Used to manage state in _localStorage_ (with optional _expiration_) or _sessionStorage_.                                                                                                      |
 | `useBrowserLanguage()`   | This will help you to get the _browser language_ with optional formatting.                                                                                                                    |
-| `useCopyToClipboard()`   | Custom hook for copying _text to clipboard_  optional _callback_.                                                                                                 |
+| `useCopyToClipboard()`   | Custom hook for copying _text to clipboard_ optional _callback_.                                                                                                                              |
 | `useToggle()`            | this hook is used to _toggle a boolean_ value with optional _localStorage_ support.                                                                                                           |
 | `useOnlineStatus()`      | Detect online status with boolean value (true/false).                                                                                                                                         |
 | `useWindowScroll()`      | Tracks _window scroll position_ with usefull information like percentage and position.                                                                                                        |
@@ -82,7 +82,7 @@ import { useUUID } from "react-amazing-hooks";
 
 const MyComponent = () => {
   const randomId1 = useUUID();
-  
+
   const randomId2 = useUUID({ excludeChars: "56789" });
 
   const randomId3 = useUUID({
@@ -276,6 +276,19 @@ export default MyComponent;
 ### useStorage
 
 ```jsx
+// simple example:
+const animals = [
+  { name: "cat", sound: "meow" },
+  { name: "dog", sound: "woof" },
+  { name: "cow", sound: "moo" },
+  { name: "pig", sound: "oink" },
+  { name: "duck", sound: "quack" },
+];
+
+useStorage("animals", animals, "localStorage", 1);
+
+// ----------------------------- //
+
 import { useStorage } from "react-amazing-hooks";
 
 const MyComponent = () => {
@@ -344,12 +357,12 @@ export default MyComponent;
 import { useCopyToClipboard } from "react-amazing-hooks";
 
 const MyComponent = () => {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
 
   // my custom callback function
   const myAmazingCallBack = () => {
-    console.log('this is just an example callback function');
-  }
+    console.log("this is just an example callback function");
+  };
 
   // function to handle input change
   const handleInputChange = (event) => {
@@ -364,8 +377,12 @@ const MyComponent = () => {
     <>
       <input type="text" value={inputValue} onChange={handleInputChange} />
       <div>
-        <button onClick={() => copyToClipboard(inputValue)}>Copy to Clipboard</button>
-        <button onClick={() => copyToClipboardWithNoCallback(inputValue)}>Copy to Clipboard 2</button>
+        <button onClick={() => copyToClipboard(inputValue)}>
+          Copy to Clipboard
+        </button>
+        <button onClick={() => copyToClipboardWithNoCallback(inputValue)}>
+          Copy to Clipboard 2
+        </button>
       </div>
     </>
   );
@@ -474,7 +491,7 @@ const MyComponent = () => {
     { id: 8, name: "Item 8" },
     { id: 9, name: "Item 9" },
     { id: 10, name: "Item 10" },
-  ]
+  ];
 
   const {
     paginatedData, // data for the current page
@@ -494,17 +511,29 @@ const MyComponent = () => {
         <div key={index}>{item}</div>
       ))}
       {/* pagination controls. This is just an example, you can style it as you like or use other controls */}
-      <button onClick={goToFirstPage} disabled={currentPage === 1}>First</button>
-      <button onClick={prevPage} disabled={currentPage === 1}>Previous</button>
-      <span style={{ margin: '0 10px' }}>{currentPage} of {totalPages}</span>
-      <button onClick={nextPage} disabled={currentPage === totalPages}>Next</button>
-      <button onClick={goToLastPage} disabled={currentPage === totalPages}>Last</button>
+      <button onClick={goToFirstPage} disabled={currentPage === 1}>
+        First
+      </button>
+      <button onClick={prevPage} disabled={currentPage === 1}>
+        Previous
+      </button>
+      <span style={{ margin: "0 10px" }}>
+        {currentPage} of {totalPages}
+      </span>
+      <button onClick={nextPage} disabled={currentPage === totalPages}>
+        Next
+      </button>
+      <button onClick={goToLastPage} disabled={currentPage === totalPages}>
+        Last
+      </button>
 
       {/* since the goToPage function requires a number as an argument, you can use an arrow function */}
-      <button onClick={() => goToPage(3)} disabled={currentPage === totalPages}>Go to page 3</button>
+      <button onClick={() => goToPage(3)} disabled={currentPage === totalPages}>
+        Go to page 3
+      </button>
     </div>
   );
-}
+};
 export default MyComponent;
 ```
 
