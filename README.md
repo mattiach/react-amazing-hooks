@@ -31,8 +31,8 @@ yarn add react-amazing-hooks
 | `useToggle()`            | this hook is used to _toggle a boolean_ value with optional _localStorage_ support.                                                                                                           |
 | `useOnlineStatus()`      | Detect online status with boolean value (true/false).                                                                                                                                         |
 | `useWindowScroll()`      | Tracks _window scroll position_ with usefull information like percentage and position.                                                                                                        |
-| `usePagination()`        | This hook is used to _paginate data_. It takes an array of data and the number of items per page as arguments. It also returns some functions to *navigate through the pages*.                  |
-| `usePreviousValues()`        | Store previous values with a limit. Default is 1 and optional "remove duplicates function" if unique is true.                |
+| `usePagination()`        | This hook is used to _paginate data_. It takes an array of data and the number of items per page as arguments. It also returns some functions to _navigate through the pages_.                |
+| `usePreviousValues()`    | Store previous values with a limit. Default is 1 and optional "remove duplicates function" if unique is true.                                                                                 |
 
 ---
 
@@ -81,8 +81,12 @@ export default MyComponent;
 import { useUUID } from "react-amazing-hooks";
 
 const MyComponent = () => {
-  const [uniqueId, regenerateId] = useUUID({
-    prefix: "customPREFIX", // prefix, default is empty string
+  const randomId1 = useUUID();
+  
+  const randomId2 = useUUID({ excludeChars: "56789" });
+
+  const randomId3 = useUUID({
+    prefix: "hello-world", // prefix, default is empty string
     length: 36, // uuid length, default is 24
     specialChars: false, // include special characters in the uuid, default is false
     excludeChars: "abc", // exclude characters from the uuid
@@ -90,8 +94,9 @@ const MyComponent = () => {
 
   return (
     <div>
-      <p>Unique ID: {uniqueId}</p>
-      <button onClick={regenerateId}>Generate New ID</button>
+      <p>Unique ID: {randomId1}</p>
+      <p>Unique ID2: {randomId2}</p>
+      <p>Unique ID3: {randomId3}</p>
     </div>
   );
 };
@@ -473,7 +478,7 @@ const MyComponent = () => {
     // ...
   ]
 
-  const objData = 
+  const objData =
 
   const {
     paginatedData, // data for the current page
@@ -513,17 +518,19 @@ export default MyComponent;
 import { usePreviousValues } from "react-amazing-hooks";
 
 const MyComponent = () => {
-  const [value, setValue] = useState('React.js');
+  const [value, setValue] = useState("React.js");
   const { previousValue } = usePreviousValues(
     value, // the value to store as previous value
-    3,     // how many previous values to store
-    true   // remove duplicates. Default is false
+    3, // how many previous values to store
+    true // remove duplicates. Default is false
   );
 
   return (
     <>
       <div>
-        <p>My favourite JS framework is: <b>{value}</b></p>
+        <p>
+          My favourite JS framework is: <b>{value}</b>
+        </p>
         <ul>
           {previousValue.map((item, index) => (
             <li key={index}>{item}</li>
@@ -531,35 +538,15 @@ const MyComponent = () => {
         </ul>
       </div>
       <div>
-        <button onClick={() => setValue('React.js')}>React.js</button>
-        <button onClick={() => setValue('Svelte')}>Svelte</button>
-        <button onClick={() => setValue('Next.js')}>Next.js</button>
-        <button onClick={() => setValue('Angular')}>Angular</button>
-        <button onClick={() => setValue('Vue.js')}>Vue.js</button>
+        <button onClick={() => setValue("React.js")}>React.js</button>
+        <button onClick={() => setValue("Svelte")}>Svelte</button>
+        <button onClick={() => setValue("Next.js")}>Next.js</button>
+        <button onClick={() => setValue("Angular")}>Angular</button>
+        <button onClick={() => setValue("Vue.js")}>Vue.js</button>
       </div>
     </>
   );
-}
+};
 
 export default MyComponent;
 ```
-
-### MIT License
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the _"Software"_), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-_THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE._

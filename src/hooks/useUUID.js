@@ -6,7 +6,8 @@ const useUUID = ({
   length = 24,
   specialChars = false,
   excludeChars = ''
-}) => {
+} = {}) => {
+
   const defaultChars = 'abcdefghilmnopqrstuvz0123456789';
   const specialCharsSet = 'abcdefghilmnopqrstuvz0123456789!@#$%^&*()_+-={}[]:;<>,.?/';
   let chars = specialChars ? specialCharsSet : defaultChars;
@@ -25,14 +26,9 @@ const useUUID = ({
     return `${prefix}${uuid}`;
   };
 
-  const [id, setId] = useState(generateUUID());
+  const [id] = useState(generateUUID());
 
-  // function to regenerate the unique identifier
-  const regenerateId = () => {
-    setId(generateUUID());
-  };
-
-  return [id, regenerateId];
+  return id;
 }
 
 export default useUUID;
