@@ -33,6 +33,7 @@ yarn add react-amazing-hooks
 | `useWindowScroll()`      | Tracks _window scroll position_ with usefull information like percentage and position.                                                                                                        |
 | `usePagination()`        | This hook is used to _paginate data_. It takes an array of data and the number of items per page as arguments. It also returns some functions to _navigate through the pages_.                |
 | `usePreviousValues()`    | Store previous values with a limit. Default is 1 and optional "remove duplicates function" if unique is true.                                                                                 |
+| `useDownload()`          | Custom hook to download text and pdf files using Blob and jsPDF library.                                                                                                                      |
 
 ---
 
@@ -568,6 +569,100 @@ const MyComponent = () => {
         <button onClick={() => setValue("Next.js")}>Next.js</button>
         <button onClick={() => setValue("Angular")}>Angular</button>
         <button onClick={() => setValue("Vue.js")}>Vue.js</button>
+      </div>
+    </>
+  );
+};
+
+export default MyComponent;
+```
+
+### useDownload
+
+```jsx
+import { useDownload } from "react-amazing-hooks";
+
+const MyComponent = () => {
+  const { downloadPDF, downloadTxt } = useDownload();
+  const content = "This is my content that I want to include in the file";
+  const fileName = "amazing-file";
+
+  const handleClickPDF = () => {
+    downloadPDF(fileName, content);
+  };
+
+  const handleClickTXT = () => {
+    downloadTxt(fileName, content);
+  };
+
+  return (
+    <div>
+      <button onClick={handleClickPDF}>Download PDF</button>
+      <button onClick={handleClickTXT}>Download TXT</button>
+    </div>
+  );
+};
+
+export default MyComponent;
+```
+
+### useHover
+
+```jsx
+import { useHover } from "react-amazing-hooks";
+
+const MyComponent = () => {
+  const ulRef = useRef(null);
+
+/* ---------------------- 
+ 
+Custom options object to extend the useHover hook:
+  const options = {
+    delay: 200, // delay before the hover is considered active
+    onHoverStart: () => console.log("Hover started"), // callback function when the hover starts
+    onHoverEnd: () => console.log("Hover ended") // callback function when the hover ends
+  };
+ 
+  const isHoveredId = useHover('#myId', options);    <---- options object passed as the second argument
+  const isHoveredClass = useHover('.myClass', options);
+  const isHoveredRef = useHover(ulRef, options); 
+
+*/
+
+  // Using useHover to detect if an element is hovered with..
+  const isHoveredId = useHover("#myId"); // .. ID
+  const isHoveredClass = useHover(".myClass"); // .. class
+  const isHoveredRef = useHover(ulRef); // .. ref
+
+  return (
+    <>
+      <div>
+        <ul>
+          <li
+            className={`myClass ${
+              isHoveredClass ? "custom-class1" : "custom-class-2"
+            }`}
+          >
+            Anakin Skywalker
+          </li>
+          <li
+            id="myId"
+            className={`${isHoveredId ? "custom-class1" : "custom-class-2"}`}
+          >
+            R2-D2
+          </li>
+          <li
+            ref={ulRef}
+            className={`${isHoveredRef ? "custom-class1" : "custom-class-2"}`}
+          >
+            Obi-Wan Kenobi
+          </li>
+        </ul>
+      </div>
+      <div>
+        <p>{isHoveredClass && "Is Anakin Skywalker your favorite? 😁"}</p>
+        <p>{isHoveredId && "Mine is R2-D2! 🤖"}</p>
+        <p>{isHoveredRef && "Obi-Wan Kenobi is a good choice too! 👌"}</p>
       </div>
     </>
   );

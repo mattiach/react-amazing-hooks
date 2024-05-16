@@ -11,3 +11,5 @@ export { default as useWindowScroll } from './hooks/useWindowScroll';
 export { default as useMediaQuery } from './hooks/useMediaQuery';
 export { default as usePagination } from './hooks/usePagination';
 export { default as usePreviousValues } from './hooks/usePreviousValues';
+export { default as useHover } from './hooks/useHover';
+export { default as useDownload } from './hooks/useDownload';
