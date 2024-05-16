@@ -79,25 +79,37 @@ export default MyComponent;
 ### useUUID
 
 ```jsx
-import { useUUID } from "react-amazing-hooks";
+import { useState } from "react";
+import { UUID } from "react-amazing-hooks";
 
 const MyComponent = () => {
-  const randomId1 = useUUID();
+  const initialID = UUID();
+  // change 'myUD' and 'setMyID' with your values
+  const [myID, setMyID] = useState(initialID);
 
-  const randomId2 = useUUID({ excludeChars: "56789" });
+  // generate a new ID with custom options
+  const handleClick = () => {
+    setMyID(
+      UUID({
+        prefix: "MY-CUSTOM-ID-",
+        length: 15,
+        specialChars: false,
+        excludeChars: "12345abcde",
+      })
+    );
+  };
 
-  const randomId3 = useUUID({
-    prefix: "hello-world", // prefix, default is empty string
-    length: 36, // uuid length, default is 24
-    specialChars: false, // include special characters in the uuid, default is false
-    excludeChars: "abc", // exclude characters from the uuid
-  });
+  // .. or with default options
+  const handleClick2 = () => {
+    setMyID(UUID());
+  };
 
   return (
     <div>
-      <p>Unique ID: {randomId1}</p>
-      <p>Unique ID2: {randomId2}</p>
-      <p>Unique ID3: {randomId3}</p>
+      <p>Initial ID: {initialID}</p>
+      <p>My UUID: {myID}</p>
+      <button onClick={handleClick}>CLICK</button>
+      <button onClick={handleClick2}>CLICK 2</button>
     </div>
   );
 };
@@ -614,7 +626,7 @@ import { useHover } from "react-amazing-hooks";
 const MyComponent = () => {
   const ulRef = useRef(null);
 
-/* ---------------------- 
+  /* ---------------------- 
  
 Custom options object to extend the useHover hook:
   const options = {
