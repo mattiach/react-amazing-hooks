@@ -79,18 +79,17 @@ export default MyComponent;
 ### useUUID
 
 ```jsx
-import { useState } from "react";
-import { UUID } from "react-amazing-hooks";
+import { useUUID, generateUUID } from "react-amazing-hooks";
 
 const MyComponent = () => {
-  const initialID = UUID();
+  const initialID = useUUID();
   // change 'myUD' and 'setMyID' with your values
   const [myID, setMyID] = useState(initialID);
 
   // generate a new ID with custom options
   const handleClick = () => {
     setMyID(
-      UUID({
+      generateUUID({
         prefix: "MY-CUSTOM-ID-",
         length: 15,
         specialChars: false,
@@ -101,7 +100,7 @@ const MyComponent = () => {
 
   // .. or with default options
   const handleClick2 = () => {
-    setMyID(UUID());
+    setMyID(generateUUID());
   };
 
   return (
@@ -113,8 +112,6 @@ const MyComponent = () => {
     </div>
   );
 };
-
-export default MyComponent;
 ```
 
 ### useFieldsPopulated

@@ -1,15 +1,20 @@
-export { default as useArray } from './hooks/useArray';
-export { default as useBrowserLanguage } from './hooks/useBrowserLanguage';
-export { default as useCopyToClipboard } from './hooks/useCopyToClipboard';
-export { default as useOnlineStatus } from './hooks/useOnlineStatus';
-export { default as useSortObjByProperty } from './hooks/useSortObjByProperty';
-export { default as useFieldsPopulated } from './hooks/useFieldsPopulated';
-export { default as useStorage } from './hooks/useStorage';
-export { default as useToggle } from './hooks/useToggle';
-export { default as useUUID } from './hooks/useUUID';
-export { default as useWindowScroll } from './hooks/useWindowScroll';
-export { default as useMediaQuery } from './hooks/useMediaQuery';
-export { default as usePagination } from './hooks/usePagination';
-export { default as usePreviousValues } from './hooks/usePreviousValues';
-export { default as useDownload } from './hooks/useDownload';
-export { default as useHover } from './hooks/useHover';
+import useUUID, { generateUUID } from './hooks/useUUID';
+
+export {
+  useUUID,
+  generateUUID,
+  default as useArray,
+  default as useBrowserLanguage,
+  default as useCopyToClipboard,
+  default as useOnlineStatus,
+  default as useSortObjByProperty,
+  default as useFieldsPopulated,
+  default as useStorage,
+  default as useToggle,
+  default as useWindowScroll,
+  default as useMediaQuery,
+  default as usePagination,
+  default as usePreviousValues,
+  default as useDownload,
+  default as useHover
+};
