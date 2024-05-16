@@ -1,20 +1,34 @@
 import useUUID, { generateUUID } from './hooks/useUUID';
+import useArray from './hooks/useArray';
+import useBrowserLanguage from './hooks/useBrowserLanguage';
+import useCopyToClipboard from './hooks/useCopyToClipboard';
+import useOnlineStatus from './hooks/useOnlineStatus';
+import useSortObjByProperty from './hooks/useSortObjByProperty';
+import useFieldsPopulated from './hooks/useArray';
+import useStorage from './hooks/useStorage';
+import useToggle from './hooks/useToggle';
+import useWindowScroll from './hooks/useWindowScroll';
+import useMediaQuery from './hooks/useMediaQuery';
+import usePagination from './hooks/usePagination';
+import usePreviousValues from './hooks/usePreviousValues';
+import useDownload from './hooks/useDownload';
+import useHover from './hooks/useHover';
 
 export {
   useUUID,
   generateUUID,
-  default as useArray,
-  default as useBrowserLanguage,
-  default as useCopyToClipboard,
-  default as useOnlineStatus,
-  default as useSortObjByProperty,
-  default as useFieldsPopulated,
-  default as useStorage,
-  default as useToggle,
-  default as useWindowScroll,
-  default as useMediaQuery,
-  default as usePagination,
-  default as usePreviousValues,
-  default as useDownload,
-  default as useHover
+  useArray,
+  useBrowserLanguage,
+  useCopyToClipboard,
+  useOnlineStatus,
+  useSortObjByProperty,
+  useFieldsPopulated,
+  useStorage,
+  useToggle,
+  useWindowScroll,
+  useMediaQuery,
+  usePagination,
+  usePreviousValues,
+  useDownload,
+  useHover
 };
