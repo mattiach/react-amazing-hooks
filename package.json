@@ -1,6 +1,6 @@
 {
   "name": "react-amazing-hooks",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "A collection of react hooks",
   "main": "src/index.js",
   "scripts": {
