@@ -11,8 +11,8 @@ import useWindowScroll from './hooks/useWindowScroll';
 import useMediaQuery from './hooks/useMediaQuery';
 import usePagination from './hooks/usePagination';
 import usePreviousValues from './hooks/usePreviousValues';
-import useDownload from './hooks/useDownload';
 import useHover from './hooks/useHover';
+import useElementVisibility from './hooks/useElementVisibility';
 
 export {
   useUUID,
@@ -29,6 +29,6 @@ export {
   useMediaQuery,
   usePagination,
   usePreviousValues,
-  useDownload,
-  useHover
+  useHover,
+  useElementVisibility,
 };

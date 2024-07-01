@@ -33,7 +33,8 @@ yarn add react-amazing-hooks
 | `useWindowScroll()`      | Tracks _window scroll position_ with usefull information like percentage and position.                                                                                                        |
 | `usePagination()`        | This hook is used to _paginate data_. It takes an array of data and the number of items per page as arguments. It also returns some functions to _navigate through the pages_.                |
 | `usePreviousValues()`    | Store previous values with a limit. Default is 1 and optional "remove duplicates function" if unique is true.                                                                                 |
-| `useDownload()`          | Custom hook to download text and pdf files using Blob and jsPDF library.                                                                                                                      |
+| `useHover()`             | Used to indicate when an element is in a hover state. Works with ref, id, and classes.                                                                                                        |
+| `useElementVisibility()` | Manages the visibility state of a specific element. Returns a boolean value indicating its visibility state.                                                                                  |
 
 ---
 
@@ -556,7 +557,7 @@ const MyComponent = () => {
   const [value, setValue] = useState("React.js");
   const { previousValue } = usePreviousValues(
     value, // the value to store as previous value
-    3, // how many previous values to store
+    100, // how many previous values to store
     true // remove duplicates. Default is false
   );
 
@@ -584,33 +585,6 @@ const MyComponent = () => {
 };
 
 export default MyComponent;
-```
-
-### useDownload
-
-```jsx
-import { useDownload } from "react-amazing-hooks";
-
-const MyComponent = () => {
-  const { downloadPDF, downloadTxt } = useDownload();
-  const content = "This is my content that I want to include in the file";
-  const fileName = "amazing-file";
-
-  const handleClickPDF = () => {
-    downloadPDF(fileName, content);
-  };
-
-  const handleClickTXT = () => {
-    downloadTxt(fileName, content);
-  };
-
-  return (
-    <div>
-      <button onClick={handleClickPDF}>Download PDF</button>
-      <button onClick={handleClickTXT}>Download TXT</button>
-    </div>
-  );
-};
 
 export default MyComponent;
 ```
@@ -678,4 +652,35 @@ Custom options object to extend the useHover hook:
 };
 
 export default MyComponent;
+```
+
+### useElementVisibility
+
+```jsx
+import MyCustomComponent from "./MyCustomComponent";
+import { useRef } from "react";
+import useElementVisibility from "./useElementVisibility";
+
+function App() {
+  const sectionA = useRef();
+  const isSectionAVisible = useElementVisibility(sectionA, 0); // hook to track visibility of 'sectionA' with 90% threshold (range between 0 and 1)
+
+  return (
+    <div style={{ height: "150vh", padding: "25px" }}>
+      <div style={{ height: "100vh" }}>Scroll down to see the effect</div>
+      <div ref={sectionA}>Section A</div>
+
+      {/* Render 'MyCustomComponent' when sectionA is visible */}
+      {isSectionAVisible ? (
+        <>
+          <div style={{ marginTop: "40vh" }}>
+            <MyCustomComponent />
+          </div>
+        </>
+      ) : null}
+    </div>
+  );
+}
+
+export default App;
 ```
