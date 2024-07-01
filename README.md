@@ -657,9 +657,9 @@ export default MyComponent;
 ### useElementVisibility
 
 ```jsx
-import MyCustomComponent from "./MyCustomComponent";
 import { useRef } from "react";
-import useElementVisibility from "./useElementVisibility";
+import { useElementVisibility } from "react-amazing-hooks";
+import MyCustomComponent from "./MyCustomComponent";
 
 function App() {
   const sectionA = useRef();
