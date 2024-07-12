@@ -43,31 +43,46 @@ yarn add react-amazing-hooks
 ```jsx
 import { useArray } from "react-amazing-hooks";
 
+interface Item {
+  id: number;
+  [key: string]: any;
+}
+
 function MyComponent() {
-  const defaultArray = ["cat", "dog", "bird", { id: 2, name: "lion" }];
+  const defaultArray: Item[] = [
+    { id: 1, name: "cat" },
+    { id: 2, name: "dog" },
+    { id: 3, name: "bird" },
+    { id: 4, name: "lion" },
+  ];
 
   const {
     add,
     clear,
     removeIndex,
-    replaceAtIndex, // .. import just what you need!
+    replaceAtIndex,
     replaceById,
     shuffle,
     ascendingSort,
     descendingSort,
-    value: currentArray, // renamed value to currentArray
-  } = useArray(defaultArray); // the array to be manipulated
-
-  console.log(currentArray); // result
+    value: currentArray,
+  } = useArray(defaultArray);
 
   return (
     <>
-      <button onClick={() => add("tiger")}>ADD</button>
+      <div>{JSON.stringify(currentArray)}</div>
+      <hr />
+      <button onClick={() => add({ id: 5, name: "tiger" })}>ADD</button>
       <button onClick={() => removeIndex(2)}>Remove</button>
-      <button onClick={() => replaceById(2, "dolphin")}>Replace by ID</button>
-      <button onClick={() => replaceAtIndex(3, "giraffe")}>Replace At</button>
+      <button onClick={() => replaceById(2, { id: 4, name: "dolphin" })}>
+        Replace by ID
+      </button>
+      <button onClick={() => replaceAtIndex(2, { id: 7, name: "giraffe" })}>
+        Replace At
+      </button>
       <button onClick={() => shuffle()}>Shuffle</button>
       <button onClick={() => ascendingSort()}>Asc Sort</button>
+      <button onClick={() => descendingSort()}>Desc Sort</button>
       <button onClick={() => descendingSort()}>Desc Sort</button>
       <button onClick={clear}>clear</button>
     </>
@@ -84,6 +99,7 @@ import { useUUID, generateUUID } from "react-amazing-hooks";
 
 const MyComponent = () => {
   const initialID = useUUID();
+
   // change 'myUD' and 'setMyID' with your values
   const [myID, setMyID] = useState(initialID);
 
@@ -108,11 +124,13 @@ const MyComponent = () => {
     <div>
       <p>Initial ID: {initialID}</p>
       <p>My UUID: {myID}</p>
-      <button onClick={handleClick}>CLICK</button>
-      <button onClick={handleClick2}>CLICK 2</button>
+      <button onClick={handleClick}>UUID With Custom options</button>
+      <button onClick={handleClick2}>UUID with Default options</button>
     </div>
   );
 };
+
+export default MyComponent;
 ```
 
 ### useFieldsPopulated
@@ -121,7 +139,7 @@ const MyComponent = () => {
 import { useFieldsPopulated } from "react-amazing-hooks";
 
 const MyComponent = () => {
-  const [fields, setFields] = useState({
+  const [fields, setFields] = useState<Record<string, unknown>>({
     name: "",
     email: "",
     age: 0,
@@ -134,14 +152,14 @@ const MyComponent = () => {
     <>
       <input
         type="text"
-        value={fields.name}
+        value={fields.name as string}
         onChange={(e) => setFields({ ...fields, name: e.target.value })}
         placeholder="Your name"
       />
       <div>
         <input
           type="email"
-          value={fields.email}
+          value={fields.email as string}
           onChange={(e) => setFields({ ...fields, email: e.target.value })}
           placeholder="Your e-mail"
         />
@@ -150,8 +168,10 @@ const MyComponent = () => {
       <div>
         <input
           type="number"
-          value={fields.age}
-          onChange={(e) => setFields({ ...fields, age: e.target.value })}
+          value={fields.age as number}
+          onChange={(e) =>
+            setFields({ ...fields, age: parseInt(e.target.value) || 0 })
+          }
           placeholder="Your age"
         />
       </div>
@@ -218,7 +238,21 @@ export default MyComponent;
 ```jsx
 import { useSortObjByProperty } from "react-amazing-hooks";
 
+interface IOption {
+  prop: string; // the property to sort by
+  desc: "asc" | "desc" | boolean; // the order is: 'asc'|true  OR 'desc'|false
+}
+
 const MyComponent = () => {
+  const [options, setOptions] =
+    useState <
+    IOption >
+    {
+      prop: "name",
+      desc: "asc",
+    };
+
+  // your array to sort
   const data = [
     { id: 1, name: "John", age: 25 },
     { id: 2, name: "Alice", age: 30 },
@@ -229,9 +263,17 @@ const MyComponent = () => {
 
   const sortedData = useSortObjByProperty(
     data, // the array to sort
-    "name", // the property to sort by
-    "asc" // the order is: 'asc'|true  OR 'desc'|false
+    options.prop, // the property to sort by
+    options.desc // the order is: 'asc'|true  OR 'desc'|false
   );
+
+  /* .. or in a simpler way
+    const sortedData = useSortObjByProperty(
+      data,       // the array to sort
+      "name",    // the property to sort by
+      "asc"     // the order is: 'asc'|true  OR 'desc'|false
+    );
+  */
 
   return (
     <>
@@ -242,6 +284,46 @@ const MyComponent = () => {
           </li>
         ))}
       </ul>
+      <button
+        onClick={() =>
+          setOptions({
+            prop: "age",
+            desc: "asc",
+          })
+        }
+      >
+        ASCESCENT AGES
+      </button>
+      <button
+        onClick={() =>
+          setOptions({
+            prop: "age",
+            desc: "desc",
+          })
+        }
+      >
+        DESCENDENT AGES
+      </button>
+      <button
+        onClick={() =>
+          setOptions({
+            prop: "name",
+            desc: "desc",
+          })
+        }
+      >
+        DESCENDENT NAMES
+      </button>
+      <button
+        onClick={() =>
+          setOptions({
+            prop: "name",
+            desc: "asc",
+          })
+        }
+      >
+        ASCESCENT NAMES
+      </button>
     </>
   );
 };
@@ -287,56 +369,47 @@ export default MyComponent;
 ### useStorage
 
 ```jsx
-// simple example:
-const animals = [
-  { name: "cat", sound: "meow" },
-  { name: "dog", sound: "woof" },
-  { name: "cow", sound: "moo" },
-  { name: "pig", sound: "oink" },
-  { name: "duck", sound: "quack" },
-];
-
-useStorage("animals", animals, "localStorage", 1);
-
-// ----------------------------- //
-
 import { useStorage } from "react-amazing-hooks";
 
+import { useEffect } from "react";
+import useStorage from "./hooks/useStorage";
+
+interface Animal {
+  name: string;
+  sound: string;
+}
+
 const MyComponent = () => {
-  // feel free to rename this variable name (users/setUsers)
-  const [users, setUsers] = useStorage(
-    "users", // key in localStorage|sessionStorage
-    [
-      { id: 1, name: "Marika", age: 17 },
-      { id: 2, name: "Mattia", age: 70 }, // .. values to store!
-      { id: 3, name: "Francesco", age: 202 },
-      { id: 4, name: "Luca", age: 350 },
-    ],
-    "localStorage", // localStorage|sessionStorage
-    7 // expires in 7 days
+  const [storedAnimals, setAnimals] = useStorage<Animal[]>(
+    "animals",
+    "localStorage",
+    1
   );
 
-  const updateUser = () => {
-    const updatedUsers = users.map((user) => {
-      if (user.id === 1) {
-        // ... this specific user with id === 1
-        return { ...user, age: 18 }; // age 17 -> .. changed to 18!
-      }
-      return user;
-    });
-    setUsers(updatedUsers); // this will update the state and storage
-  };
+  const myAnimals = [
+    { name: "cat", sound: "meow" },
+    { name: "dog", sound: "woof" },
+    { name: "cow", sound: "moo" },
+    { name: "pig", sound: "oink" },
+    { name: "duck", sound: "quack" },
+  ];
+
+  useEffect(() => {
+    setAnimals(myAnimals);
+  }, []);
 
   return (
     <div>
-      {users &&
-        users.map((user) => (
-          <div key={user.id}>
-            <p>{user.name}</p>
-            <p>{user.age}</p>
-          </div>
-        ))}
-      <button onClick={updateUser}>Update user</button>
+      <div>
+        <h2>Animals:</h2>
+        <ul>
+          {storedAnimals.map((animal, index) => (
+            <li key={index}>
+              {animal.name} - {animal.sound}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
@@ -349,14 +422,22 @@ export default MyComponent;
 ```jsx
 import { useBrowserLanguage } from "react-amazing-hooks";
 
-const MyComponent = () => {
-  // the first parameter is the format: 'short', 'extend'
+const MyComponent: React.FC = () => {
+  // the first parameter is the format: 'short', 'full'
   // the second parameter is the text format: 'uppercase', 'capitalize', or 'lowercase'
-  const example1 = useBrowserLanguage("extend", "lowercase");
+  const example1 = useBrowserLanguage("short", "lowercase");
   const example2 = useBrowserLanguage(undefined, "uppercase"); // --> 'short'
   const example3 = useBrowserLanguage("short", "capitalize");
 
-  // ... the rest of your code here!
+  return (
+    <>
+      <div>
+        <div>{example1}</div>
+        <div>{example2}</div>
+        <div>{example3}</div>
+      </div>
+    </>
+  );
 };
 
 export default MyComponent;
@@ -368,15 +449,15 @@ export default MyComponent;
 import { useCopyToClipboard } from "react-amazing-hooks";
 
 const MyComponent = () => {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState < string > "";
 
   // my custom callback function
   const myAmazingCallBack = () => {
-    console.log("this is just an example callback function");
+    alert("this is just an example callback function");
   };
 
   // function to handle input change
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
@@ -409,7 +490,7 @@ import { useToggle } from "react-amazing-hooks";
 
 const MyComponent = () => {
   // feel free to change the initialValue and localStorageKey and to import just what you need!
-  const { value, toggle, setValueTo, reset, isValue } = useToggle(
+  const { value, toggle, setValueTo, isValue } = useToggle(
     false, // initialValue
     "myToggle" // localStorageKey
   );
@@ -427,9 +508,6 @@ const MyComponent = () => {
 
       {/* Button to set the value to false */}
       <button onClick={() => setValueTo(false)}>Set to False</button>
-
-      {/* Button to reset the value to the initial value */}
-      <button onClick={reset}>Reset</button>
 
       {/* Check if the value is true */}
       {isValue(true) && <p>The value is true</p>}
@@ -472,11 +550,13 @@ const MyComponent = () => {
 
   return (
     <>
-      <div>
-        <p>Horizontal position: {x}</p>
-        <p>Vertical position: {y}</p>
-        <p>Percentage of horizontal scrolling: {percentageX}%</p>
-        <p>Percentage of vertical scrolling {percentageY}%</p>
+      <div style={{ height: "150em", width: "150em" }}>
+        <div style={{ position: "fixed" }}>
+          <p>Horizontal position: {x}</p>
+          <p>Vertical position: {y}</p>
+          <p>Percentage of horizontal scrolling: {percentageX}%</p>
+          <p>Percentage of vertical scrolling {percentageY}%</p>
+        </div>
       </div>
     </>
   );
@@ -491,8 +571,14 @@ export default MyComponent;
 import { usePagination } from "react-amazing-hooks";
 
 const MyComponent = () => {
+  // Specify the type of data in 'myData'
+  type ItemType = {
+    id: number,
+    name: string,
+  };
+
   const myData = [
-    { id: 1, name: "Oggetto 1" },
+    { id: 1, name: "Item 1" },
     { id: 2, name: "Item 2" },
     { id: 3, name: "Item 3" },
     { id: 4, name: "Item 4" },
@@ -506,22 +592,22 @@ const MyComponent = () => {
 
   const {
     paginatedData, // data for the current page
-    currentPage, // this rappresent the current page number (number)
-    totalPages, // how many pages in total (number)
-    goToPage, // go to a specific page with a number argument (function)
-    nextPage, // go to the next page (function)
-    prevPage, // go to go to the previous page (function)
-    goToFirstPage, // go to the first page (function)
-    goToLastPage, // go to the last page (function)
-  } = usePagination(myData, 5); // .. example: 5 items per page
+    currentPage, // current page number
+    totalPages, // total number of pages
+    goToPage, // function to go to a specific page
+    nextPage, // function to go to the next page
+    prevPage, // function to go to the previous page
+    goToFirstPage, // function to go to the first page
+    goToLastPage, // function to go to the last page
+  } = usePagination < ItemType > (myData, 5); // 5 items per page
 
   return (
     <div>
       {/* render your paginated data here */}
-      {paginatedData.map((item, index) => (
-        <div key={index}>{item}</div>
+      {paginatedData.map((item) => (
+        <div key={`item_${item.id}`}>{item.name}</div>
       ))}
-      {/* pagination controls. This is just an example, you can style it as you like or use other controls */}
+      {/* pagination controls */}
       <button onClick={goToFirstPage} disabled={currentPage === 1}>
         First
       </button>
@@ -538,13 +624,14 @@ const MyComponent = () => {
         Last
       </button>
 
-      {/* since the goToPage function requires a number as an argument, you can use an arrow function */}
+      {/* example of using the goToPage function */}
       <button onClick={() => goToPage(3)} disabled={currentPage === totalPages}>
         Go to page 3
       </button>
     </div>
   );
 };
+
 export default MyComponent;
 ```
 
@@ -555,11 +642,12 @@ import { usePreviousValues } from "react-amazing-hooks";
 
 const MyComponent = () => {
   const [value, setValue] = useState("React.js");
-  const { previousValue } = usePreviousValues(
+
+  const { previousValue } = usePreviousValues({
     value, // the value to store as previous value
-    100, // how many previous values to store
-    true // remove duplicates. Default is false
-  );
+    maxValues: 5, // how many previous values to store
+    unique: true, // remove duplicates. Default is false
+  });
 
   return (
     <>
@@ -567,11 +655,7 @@ const MyComponent = () => {
         <p>
           My favourite JS framework is: <b>{value}</b>
         </p>
-        <ul>
-          {previousValue.map((item, index) => (
-            <li key={index}>{item}</li>
-          ))}
-        </ul>
+        <p>{JSON.stringify(previousValue)}</p>
       </div>
       <div>
         <button onClick={() => setValue("React.js")}>React.js</button>
@@ -659,10 +743,9 @@ export default MyComponent;
 ```jsx
 import { useRef } from "react";
 import { useElementVisibility } from "react-amazing-hooks";
-import MyCustomComponent from "./MyCustomComponent";
 
-function App() {
-  const sectionA = useRef();
+const MyComponent = () => {
+  const sectionA = useRef(null);
   const isSectionAVisible = useElementVisibility(sectionA, 0); // hook to track visibility of 'sectionA' with 90% threshold (range between 0 and 1)
 
   return (
@@ -674,13 +757,13 @@ function App() {
       {isSectionAVisible ? (
         <>
           <div style={{ marginTop: "40vh" }}>
-            <MyCustomComponent />
+            <p>prova</p>
           </div>
         </>
       ) : null}
     </div>
   );
-}
+};
 
-export default App;
+export default MyComponent;
 ```
