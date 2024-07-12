@@ -1,13 +1,14 @@
 import { useState } from 'react';
+import { PaginationResult } from '../interfaces/const';
 
 // custom hook for pagination with pagination controls, like next, prev, go to page, etc..
-const usePagination = (data, itemsPerPage) => {
+const usePagination = <T>(data: T[], itemsPerPage: number): PaginationResult<T> => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
   // go to a specific page number. It requires a number as an argument.
-  const goToPage = (pageNumber) => {
+  const goToPage = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 

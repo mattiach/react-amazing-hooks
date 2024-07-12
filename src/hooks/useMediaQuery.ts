@@ -1,8 +1,8 @@
-// hooks/useMediaQuery.js
 import { useState, useEffect } from 'react';
+import { MediaQueryParams } from '../interfaces/const';
 
 // custom hook to check media query. Can be used to conditionally render components based on screen size, or to apply different styles based on screen size
-const useMediaQuery = (queryObj) => {
+const useMediaQuery = (queryObj: MediaQueryParams) => {
   const { query, min, max } = queryObj;
   const [matches, setMatches] = useState(false);
 
@@ -26,12 +26,16 @@ const useMediaQuery = (queryObj) => {
         throw new Error('Invalid media query parameters.');
     }
 
-    const handleChange = (event) => {
+    const handleChange = (event: MediaQueryListEvent) => {
       setMatches(event.matches);
     };
 
     const mqList = window.matchMedia(mediaQuery);
-    handleChange(mqList); // check initial match
+
+    // Initial check
+    setMatches(mqList.matches);
+
+    // Listen for changes
     mqList.addEventListener('change', handleChange);
 
     return () => {
@@ -40,6 +44,6 @@ const useMediaQuery = (queryObj) => {
   }, [query, min, max]);
 
   return matches;
-}
+};
 
 export default useMediaQuery;

@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
+import { ScrollPosition } from '../interfaces/const';
 
-// custom hook to track window scroll position
-const useWindowScroll = () => {
-  const [scrollPosition, setScrollPosition] = useState({
+// Custom hook to track window scroll position
+const useWindowScroll = (): ScrollPosition => {
+  const [scrollPosition, setScrollPosition] = useState<ScrollPosition>({
     x: 0,
     y: 0,
     percentageX: 0,
@@ -20,14 +21,14 @@ const useWindowScroll = () => {
     const percentageX = (scrollX / (document.body.scrollWidth - window.innerWidth)) * 100;
 
     setScrollPosition({
-      x: 0 | scrollX,
-      y: 0 | scrollY,
-      percentageX: 0 | percentageX.toFixed(2),
-      percentageY: 0 | percentageY.toFixed(2),
+      x: Math.floor(scrollX),
+      y: Math.floor(scrollY),
+      percentageX: parseFloat(percentageX.toFixed(2)),
+      percentageY: parseFloat(percentageY.toFixed(2)),
     });
   };
 
-  // window scroll event listener
+  // add scroll event listener on mount, remove on unmount
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {

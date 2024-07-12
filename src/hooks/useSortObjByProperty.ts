@@ -1,8 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react';
+import { OrderType } from '../interfaces/const';
 
-// custom hook to sort an array of objects by a property
-const useSortObjByProperty = (arr, property, order = 'asc' | false) => {
-  const [sortedArray, setSortedArray] = useState([]);
+interface ObjectType {
+  [key: string]: any;
+}
+
+// Sort an array of objects by a property with optional ascending or descending order.
+const useSortObjByProperty = (arr: ObjectType[], property: string, order: OrderType = 'asc') => {
+  const [sortedArray, setSortedArray] = useState<ObjectType[]>([]);
 
   useEffect(() => {
     const sorted = [...arr].sort((a, b) => {
@@ -23,5 +29,6 @@ const useSortObjByProperty = (arr, property, order = 'asc' | false) => {
 
   return sortedArray;
 };
+
 
 export default useSortObjByProperty;

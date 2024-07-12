@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
+import { FieldsState } from "../interfaces/const";
 
 // custom hook to check if object fields are populated
-const useFieldsPopulated = (fields) => {
+const useFieldsPopulated = (fields: FieldsState) => {
   const [fieldsPopulated, setFieldsPopulated] = useState(false);
 
   // function to check if fields are populated
   const checkFields = () => {
-    const arePopulated = Object.values(fields).every((value) => value);
+    const arePopulated = Object.values(fields).every((value) => !!value);
     setFieldsPopulated(arePopulated);
   };
 

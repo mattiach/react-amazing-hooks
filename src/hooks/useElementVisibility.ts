@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, RefObject } from 'react';
 
 // custom hook to manage the visibility state of a specific element
-const useElementVisibility = (ref, threshold) => {
-  const [isVisible, setIsVisible] = useState(false); // .. current visibility state of the element
+const useElementVisibility = (ref: RefObject<Element>, threshold: number = 0) => {
+  const [isVisible, setIsVisible] = useState(false); // current visibility state of the element
 
   useEffect(() => {
     // copy ref.current to a local variable to avoid stale closure issues
@@ -14,7 +14,7 @@ const useElementVisibility = (ref, threshold) => {
         // update visibility state based on intersection status
         setIsVisible(entry.isIntersecting);
       },
-      { threshold } // .. set the threshold for intersection
+      { threshold } // set the threshold for intersection
     );
 
     // start observing the target element

@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 
+// Define type for textFormat options
+type TextFormat = 'uppercase' | 'capitalize' | 'lowercase';
+
 // custom hook to get the browser language with optional formatting
-const useBrowserLanguage = (format = 'short', textFormat = 'lowercase') => {
-  const [language, setLanguage] = useState(navigator.language);
+const useBrowserLanguage = (format: 'short' | 'full' = 'short', textFormat: TextFormat = 'lowercase'): string => {
+  const [language, setLanguage] = useState<string>(navigator.language);
 
   // effect to update language when it changes
   useEffect(() => {
@@ -19,7 +22,7 @@ const useBrowserLanguage = (format = 'short', textFormat = 'lowercase') => {
   }, []);
 
   // default formatted language is the raw language value
-  let formattedLanguage = language;
+  let formattedLanguage: string = language;
 
   // format the language based on the 'format' parameter
   if (format === 'short') {

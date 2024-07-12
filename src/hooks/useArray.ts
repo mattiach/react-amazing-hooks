@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unnecessary-type-constraint */
 import { useState } from 'react';
+import type { HasId, UseArrayReturn } from '../interfaces/const';
 
 // custom hook to manage an array of items with various functions
-const useArray = (initial) => {
-  const [value, setValue] = useState(initial);
+const useArray = <T extends HasId>(initial: T[]): UseArrayReturn<T> => {
+  const [value, setValue] = useState<T[]>(initial);
 
   // function to add an element to the array
-  const add = (item) => {
+  const add = (item: T) => {
     setValue((prevValue) => [...prevValue, item]);
   };
 
@@ -15,21 +18,19 @@ const useArray = (initial) => {
   };
 
   // function to remove an element from the array by id
-  const removeById = (id) => {
+  const removeById = (id: number) => {
     setValue((prevValue) =>
       prevValue.filter((item) => item && item.id !== id)
     );
   };
 
   // function to remove an element from the array by index
-  const removeIndex = (index) => {
-    setValue((prevValue) =>
-      prevValue.filter((item, i) => i !== index)
-    );
+  const removeIndex = (index: number) => {
+    setValue((prevValue) => prevValue.filter((_, i) => i !== index));
   };
 
   // function to replace an element in the array at a specific index
-  const replaceAtIndex = (index, newItem) => {
+  const replaceAtIndex = (index: number, newItem: T) => {
     setValue((prevValue) => {
       const newArray = [...prevValue];
       if (index >= 0 && index < newArray.length) {
@@ -40,16 +41,16 @@ const useArray = (initial) => {
   };
 
   // function to replate an element in the array at specific id
-  const replaceById = (id, newItem) => {
+  const replaceById = (id: number, newItem: T) => {
     setValue((prevValue) => {
       const newArray = [...prevValue];
-      const index = newArray.findIndex((item) => item.id === id);
+      const index = newArray.findIndex((item) => item && item.id === id);
       if (index >= 0) {
         newArray.splice(index, 1, newItem);
       }
       return newArray;
     });
-  }
+  };
 
   // function to shuffle the array in a random order
   const shuffle = () => {
@@ -67,21 +68,22 @@ const useArray = (initial) => {
   const ascendingSort = () => {
     setValue((prevValue) => {
       const newArray = [...prevValue];
-      return newArray.sort();
+      return newArray.sort((a, b) => (a.id > b.id ? 1 : -1));
     });
   };
 
-  // functio nto sort the array in descending order
+  // function to sort the array in descending order
   const descendingSort = () => {
     setValue((prevValue) => {
       const newArray = [...prevValue];
-      return newArray.sort().reverse();
+      return newArray.sort((a, b) => (a.id < b.id ? 1 : -1));
     });
   };
 
   return {
+    value,
     add,
-    clear,  
+    clear,
     removeById,
     removeIndex,
     replaceAtIndex,
@@ -89,7 +91,6 @@ const useArray = (initial) => {
     shuffle,
     ascendingSort,
     descendingSort,
-    value: value
   };
 };
 

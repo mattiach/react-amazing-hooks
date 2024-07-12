@@ -1,16 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, RefObject } from 'react';
+import { OptionsUseOver } from '../interfaces/const';
+
+type Target = string | RefObject<Element>;
 
 // // custom hook to detect if an element is hovered. It accepts a string ('id' or 'class') or a 'ref'.
 // options object can be used to extend the hook with custom delay and callback functions
-const useHover = (target, options = {}) => {
-  // boolean state to keep track of the hover state
+const useHover = (target: Target, options: OptionsUseOver = {}) => {
   const [isHovered, setIsHovered] = useState(false);
 
   // options object with default values
   const {
-    delay = 0, // delay in milliseconds before hover is considered active
-    onHoverStart = () => { }, // callback function when hover starts
-    onHoverEnd = () => { } // callback function when hover ends
+    delay = 0,
+    onHoverStart = () => { },
+    onHoverEnd = () => { }
   } = options;
 
   // handlers for mouse enter and leave events
@@ -29,7 +31,7 @@ const useHover = (target, options = {}) => {
   };
 
   useEffect(() => {
-    let targetElement;
+    let targetElement: Element | null | undefined;
 
     // determine target element based on input type
     if (typeof target === 'string') {
@@ -42,21 +44,19 @@ const useHover = (target, options = {}) => {
       targetElement = target.current;
     }
 
-    // add event listeners to target element
     if (targetElement) {
       targetElement.addEventListener('mouseenter', handleMouseEnter);
       targetElement.addEventListener('mouseleave', handleMouseLeave);
 
-      // clean up event listeners on unmount
       return () => {
-        targetElement.removeEventListener('mouseenter', handleMouseEnter);
-        targetElement.removeEventListener('mouseleave', handleMouseLeave);
+        targetElement!.removeEventListener('mouseenter', handleMouseEnter);
+        targetElement!.removeEventListener('mouseleave', handleMouseLeave);
       };
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target, delay, onHoverStart, onHoverEnd]);
 
-  return isHovered; // return the boolean state
+  return isHovered;
 };
 
 export default useHover;

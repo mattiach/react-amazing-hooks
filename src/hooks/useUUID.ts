@@ -1,17 +1,18 @@
 import { useState } from 'react';
+import { GenerateUUIDOptions } from '../interfaces/const';
 
-// function to generate a unique identifier
+// Function to generate a unique identifier
 export const generateUUID = ({
   prefix = '',
   length = 24,
   specialChars = false,
   excludeChars = ''
-} = {}) => {
+}: GenerateUUIDOptions = {}): string => {
   const defaultChars = 'abcdefghilmnopqrstuvz0123456789';
   const specialCharsSet = 'abcdefghilmnopqrstuvz0123456789!@#$%^&*()_+-={}[]:;<>,.?/';
   let chars = specialChars ? specialCharsSet : defaultChars;
 
-  // remove excluded characters
+  // Remove excluded characters
   excludeChars.split('').forEach(char => {
     chars = chars.replace(new RegExp(char, 'g'), '');
   });
@@ -23,8 +24,8 @@ export const generateUUID = ({
   return `${prefix}${uuid}`;
 };
 
-// custom hook used to generate a unique identifier
-const useUUID = (options) => {
+// Custom hook used to generate a unique identifier
+const useUUID = (options?: GenerateUUIDOptions): string => {
   const [id] = useState(() => generateUUID(options));
   return id;
 };
