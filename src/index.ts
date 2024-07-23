@@ -4,7 +4,7 @@ import useBrowserLanguage from './hooks/useBrowserLanguage';
 import useCopyToClipboard from './hooks/useCopyToClipboard';
 import useOnlineStatus from './hooks/useOnlineStatus';
 import useSortObjByProperty from './hooks/useSortObjByProperty';
-import useFieldsPopulated from './hooks/useArray';
+import useFieldsPopulated from './hooks/useFieldsPopulated';
 import useStorage from './hooks/useStorage';
 import useToggle from './hooks/useToggle';
 import useWindowScroll from './hooks/useWindowScroll';
