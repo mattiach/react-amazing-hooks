@@ -369,52 +369,48 @@ export default MyComponent;
 ### useStorage
 
 ```jsx
+import { useEffect } from "react";
 import { useStorage } from "react-amazing-hooks";
 
-import { useEffect } from "react";
-import useStorage from "./hooks/useStorage";
-
 interface Animal {
+  id: number;
   name: string;
   sound: string;
 }
 
-const MyComponent = () => {
-  const [storedAnimals, setAnimals] = useStorage<Animal[]>(
-    "animals",
-    "localStorage",
-    1
-  );
-
+function App() {
   const myAnimals = [
-    { name: "cat", sound: "meow" },
-    { name: "dog", sound: "woof" },
-    { name: "cow", sound: "moo" },
-    { name: "pig", sound: "oink" },
-    { name: "duck", sound: "quack" },
+    { id: 1, name: "cat", sound: "meow" },
+    { id: 2, name: "dog", sound: "woof" },
+    { id: 3, name: "cow", sound: "moo" },
+    { id: 4, name: "pig", sound: "oink" },
+    { id: 5, name: "duck", sound: "quack" },
   ];
 
+  const [myStoredValues, setMyStoredValues] = useStorage<Animal[]>(
+    "animals", // key
+    "localStorage", // localStorage || "sessionStorage"
+    7 // expiration days (optional. Default value is 0)
+  );
+
   useEffect(() => {
-    setAnimals(myAnimals);
+    setMyStoredValues(myAnimals);
   }, []);
 
   return (
-    <div>
-      <div>
-        <h2>Animals:</h2>
-        <ul>
-          {storedAnimals.map((animal, index) => (
-            <li key={index}>
-              {animal.name} - {animal.sound}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+    <>
+      <ul>
+        {myStoredValues?.map((el) => {
+          return <li key={el.id}>{el.name}</li>;
+        })}
+      </ul>
+    </>
   );
-};
+}
 
-export default MyComponent;
+export default App;
+
+
 ```
 
 ### useBrowserLanguage

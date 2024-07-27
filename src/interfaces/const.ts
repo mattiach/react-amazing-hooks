@@ -62,8 +62,6 @@ export interface StorageItem<T> {
 
 export type StorageType = "localStorage" | "sessionStorage";
 
-export type UseStorageReturnType<T> = [T, Dispatch<SetStateAction<T>>];
-
 export type OptionalLocalStorageKey = string | '';
 
 export type InitialValueType<T> = T | (() => T);
