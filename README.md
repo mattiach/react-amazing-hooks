@@ -244,13 +244,10 @@ interface IOption {
 }
 
 const MyComponent = () => {
-  const [options, setOptions] =
-    useState <
-    IOption >
-    {
-      prop: "name",
-      desc: "asc",
-    };
+  const [options, setOptions] = useState<IOption>({
+    prop: "name",
+    desc: "asc",
+  });
 
   // your array to sort
   const data = [
