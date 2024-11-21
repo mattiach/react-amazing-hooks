@@ -1,6 +1,6 @@
 {
   "name": "react-amazing-hooks",
-  "version": "5.1.2",
+  "version": "5.1.3",
   "description": "A collection of react hooks with TypeScript support",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
