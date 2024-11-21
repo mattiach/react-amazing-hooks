@@ -2,8 +2,8 @@
   "name": "react-amazing-hooks",
   "version": "5.1.4",
   "description": "A collection of react hooks with TypeScript support",
-  "main": "src/index.ts",
-  "types": "src/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
