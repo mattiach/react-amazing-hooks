@@ -1,12 +1,15 @@
-import { useState, useEffect, RefObject } from 'react';
+import { useState, useEffect, type RefObject } from 'react';
 
 // custom hook to manage the visibility state of a specific element
-const useElementVisibility = (ref: RefObject<Element>, threshold: number = 0) => {
+const useElementVisibility = <T extends Element>(
+  ref: RefObject<T | null>,
+  threshold: number = 0
+) => {
   const [isVisible, setIsVisible] = useState(false); // current visibility state of the element
 
   useEffect(() => {
-    // copy ref.current to a local variable to avoid stale closure issues
     const currentRef = ref.current;
+    if (!currentRef) return; // exit early if there is no current re
 
     // create an IntersectionObserver instance
     const observer = new IntersectionObserver(
