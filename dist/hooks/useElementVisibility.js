@@ -4,8 +4,9 @@ var useElementVisibility = function (ref, threshold) {
     if (threshold === void 0) { threshold = 0; }
     var _a = useState(false), isVisible = _a[0], setIsVisible = _a[1]; // current visibility state of the element
     useEffect(function () {
-        // copy ref.current to a local variable to avoid stale closure issues
         var currentRef = ref.current;
+        if (!currentRef)
+            return; // exit early if there is no current re
         // create an IntersectionObserver instance
         var observer = new IntersectionObserver(function (_a) {
             var entry = _a[0];
