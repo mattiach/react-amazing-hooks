@@ -13,6 +13,7 @@ import usePagination from './hooks/usePagination';
 import usePreviousValues from './hooks/usePreviousValues';
 import useHover from './hooks/useHover';
 import useElementVisibility from './hooks/useElementVisibility';
+import { useStep } from './hooks/useStep';
 
 export {
   useUUID,
@@ -31,4 +32,5 @@ export {
   usePreviousValues,
   useHover,
   useElementVisibility,
+  useStep,
 };
