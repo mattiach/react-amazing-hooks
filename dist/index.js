@@ -13,4 +13,5 @@ import usePagination from './hooks/usePagination';
 import usePreviousValues from './hooks/usePreviousValues';
 import useHover from './hooks/useHover';
 import useElementVisibility from './hooks/useElementVisibility';
-export { useUUID, generateUUID, useArray, useBrowserLanguage, useCopyToClipboard, useOnlineStatus, useSortObjByProperty, useFieldsPopulated, useStorage, useToggle, useWindowScroll, useMediaQuery, usePagination, usePreviousValues, useHover, useElementVisibility, };
+import { useStep } from './hooks/useStep';
+export { useUUID, generateUUID, useArray, useBrowserLanguage, useCopyToClipboard, useOnlineStatus, useSortObjByProperty, useFieldsPopulated, useStorage, useToggle, useWindowScroll, useMediaQuery, usePagination, usePreviousValues, useHover, useElementVisibility, useStep, };
