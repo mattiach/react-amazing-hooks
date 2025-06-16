@@ -79,3 +79,10 @@ export interface ScrollPosition {
   percentageX: number;
   percentageY: number;
 }
+
+export interface UseStepOptions {
+  initialStep?: number;
+  minStep?: number;
+  maxStep: number;
+  onStepChange?: (step: number) => void;
+}
